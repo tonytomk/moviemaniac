@@ -32,20 +32,39 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Component, Inject } from 'vue-property-decorator';
+import {} from 'vue-property-decorator';
 import { AxiosResponse } from 'axios';
 import axios, {AxiosPromise} from 'axios';
-
+import {VueApiServices} from '../services/VueApiServices';
+@Component({
+  components: { },
+})
 export default  class MovieComponent extends Vue {
  public query: string = '';
  public movies: any = [];
- public updateQuery(): any {
-      const query = this.query;
-      const url = 'https://api.themoviedb.org/3/search/movie?api_key=YOUR_KEY&query=';
-      axios.get(url + query).then((response) => {
-          this.movies = response.data.results;
-          this.$forceUpdate();
-      });
+
+  @Inject('vueApiServices')
+  private vueApiServices!: VueApiServices;
+
+//  public updateQuery(): any {
+//       const query = this.query;
+//       const url = 'https://api.themoviedb.org/3/search/movie?api_key=1dd2fa567bab9c7180a9944d7cf5f3ea&query=';
+//       axios.get(url + query).then((response) => {
+//           this.movies = response.data.results;
+//           this.$forceUpdate();
+//       });
+// }
+public updateQuery(): any {
+if (!this.vueApiServices) {
+    return;
+}
+this.vueApiServices.getMovieDetails(this.query).then((response) => {
+  if (response.data) {
+    this.movies = response.data.results;
+    this.$forceUpdate();
+  }
+});
 }
 }
 </script>

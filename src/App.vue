@@ -7,8 +7,20 @@
     </div>
     <router-view/>
   </div>
+  
 </template>
-
+<script lang="ts">
+import {Component, Provide, Vue} from 'vue-property-decorator';
+import {VueApiServices} from './services/VueApiServices';
+import MovieComponent from '@/components/MovieComponent.vue';
+@Component({
+  components: {MovieComponent},
+})
+export default class App extends Vue {
+   @Provide('vueApiServices')
+   public vueApiServices = new VueApiServices();
+}
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
