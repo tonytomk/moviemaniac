@@ -1,0 +1,35 @@
+{
+  "name": "moviemaniac",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.1",
+    "axios": "0.18.0",
+    "bootstrap": "4.3.1",
+    "vue-class-component": "^6.1.2",
+    "vue-loader": "^15.7.0",
+    "vue-property-decorator": "^6.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-typescript": "^3.5.1",
+    "@vue/cli-service": "^3.5.1",
+    "typescript": "^3.2.1",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
