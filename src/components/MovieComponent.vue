@@ -1,13 +1,14 @@
 <template>
 <div>
 <nav class="navbar navbar-light bg-light">
-    <input type="text" v-model="query" v-on:keyup.enter="updateQuery()" title="fill movie name and press enter " placeholder="movie name" />
+    <input type="text" v-model="query" v-on:blur="updateQuery()" v-on:keyup.enter="updateQuery()" title="fill movie name and press enter " placeholder="search movie name" />
+    <button type="submit" @click="updateQuery()"><i class="fa fa-search"></i></button>
 </nav>
 <div  class="container">
     <div class="row">
     <div v-for = "(movie,id) in movies" :key="id">
    <div class="column">
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 19rem;">
   <img v-if=movie.poster_path class="card-img-top" :src="'http://image.tmdb.org/t/p/w185//' + movie.poster_path" alt="Card image cap">
    <img  v-else src="https://via.placeholder.com/150" class="card-img-top" >
   <div class="card-body">
@@ -20,7 +21,7 @@
     <li class="list-group-item">Vote Count : {{movie.vote_count}}</li>
   </ul>
   <div class="card-body">
-    <a :href="'https://www.themoviedb.org/movie/'+movie.id" class="btn btn-primary">{{ movie.title }}</a>
+    <a :href="'https://www.themoviedb.org/movie/'+movie.id" target="_blank" class="btn btn-primary">{{ movie.title }}</a>
   </div>
 </div>
 </div>
@@ -75,13 +76,21 @@ this.vueApiServices.getMovieDetails(this.query).then((response) => {
    flex-wrap: wrap;
 }
 .column {
-  flex: 33.33%;
+  flex: 25%;
   width: 100%;
   padding: 5px;
+  justify-content: space-evenly;
  
 }
 .card-text,.list-group-item,.a {
   text-align: left;
+}
+.navbar {
+  display: flex;
+  flex: 1 1;
+}
+input {
+    width: 97.9%;
 }
 
 @media screen and (max-width: 600px) {
