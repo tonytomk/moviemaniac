@@ -1,7 +1,7 @@
 <template>
 <div>
 <nav class="navbar navbar-light bg-light">
-    <input type="text" v-model="query" v-on:blur="updateQuery()" v-on:keyup.enter="updateQuery()" title="fill movie name and press enter " placeholder="search movie name" />
+    <input type="text" v-model="query" v-on:keyup.enter="updateQuery()" title="fill movie name and press enter " placeholder="search movie name" />
     <button type="submit" @click="updateQuery()"><i class="fa fa-search"></i></button>
 </nav>
 <div  class="container">
@@ -13,7 +13,12 @@
    <img  v-else src="https://via.placeholder.com/150" class="card-img-top" >
   <div class="card-body">
     <h5 class="card-title">{{ movie.title }}</h5>
-    <p class="card-text">{{ movie.overview }}</p>
+    <p v-if="ismoreInfo === false" class="card-text" v-bind="resizeDescription(movie)">{{lessInfo}}
+     <br><button class="btn btn-outline-primary btn-sm" @click="moreInfoClicked()" :title="movie.overview" >More</button>
+    </p>
+     <p v-if="ismoreInfo === true" class="card-text">{{movie.overview}}
+       <br><button class="btn btn-outline-primary btn-sm" @click="moreInfoClicked()" >Less</button>
+     </p>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">Release Date : {{movie.release_date}}</li>
@@ -21,7 +26,7 @@
     <li class="list-group-item">Vote Count : {{movie.vote_count}}</li>
   </ul>
   <div class="card-body">
-    <a :href="'https://www.themoviedb.org/movie/'+movie.id" target="_blank" class="btn btn-primary">{{ movie.title }}</a>
+    <a :href="'https://www.themoviedb.org/movie/'+movie.id" target="_blank" class="btn btn-primary" :title="movie.title">{{ movie.title.slice(0,15) }}</a>
   </div>
 </div>
 </div>
@@ -44,7 +49,9 @@ import {VueApiServices} from '../services/VueApiServices';
 export default  class MovieComponent extends Vue {
  public query: string = '';
  public movies: any = [];
-
+ public lessInfo: string = '';
+ public moreInfo: string = '';
+ public ismoreInfo: boolean = false;
   @Inject('vueApiServices')
   private vueApiServices!: VueApiServices;
 
@@ -67,20 +74,30 @@ this.vueApiServices.getMovieDetails(this.query).then((response) => {
   }
 });
 }
+public  moreInfoClicked(movie: any) {
+ this.ismoreInfo = (this.ismoreInfo === false) ? true : false;
+}
+public resizeDescription(descript: any) {
+  const descr = descript.overview;
+  this.lessInfo = descr.length < 100 ? descr : descr.slice(0 , 100);
+  this.$forceUpdate();
+}
+
+public moreInfoDescription(descript: any) {
+  this.moreInfo = descript.overview;
+  this.$forceUpdate();
+}
 }
 </script>
 <style>
 
 .row {
   display: flex;
-   flex-wrap: wrap;
+ 
 }
 .column {
-  flex: 25%;
-  width: 100%;
   padding: 5px;
-  justify-content: space-evenly;
- 
+  margin-left: 25%;
 }
 .card-text,.list-group-item,.a {
   text-align: left;
