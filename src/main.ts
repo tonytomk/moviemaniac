@@ -4,6 +4,7 @@ import router from './router';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.css';
+import cors from 'cors';
 
 Vue.config.productionTip = false;
 
