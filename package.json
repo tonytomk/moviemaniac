@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.4",
     "@vue/cli-plugin-typescript": "^3.5.1",
-    "@vue/cli-service": "^3.5.1",
+    "@vue/cli-service": "^5.0.8",
     "typescript": "^3.2.1",
     "vue-template-compiler": "^2.5.21",
     "copy-webpack-plugin": "^5.0.0"
